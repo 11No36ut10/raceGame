@@ -3,8 +3,8 @@
   /* zorg dat canvas niet groter wordt dan window
      en behoud breedte x hoogte verhouding van 1280x720 
    */  
-  max-width: min(100vh*1280/720, 100vw);
-  max-height: min(100vw*720/1280, 100vh);
+  max-width: min(100vh*1344/960, 100vw);
+  max-height: min(100vw*960/1344, 100vh);
   
   /* zet canvas in het midden
    */ 
@@ -17,3 +17,8 @@ html, body {
    */ 
   margin: 0px;
 }
+
+/*rgba(135,184,20,255)
+size car: 13 x 22
+convert to: 520 x 880
+image size 52 x 88
