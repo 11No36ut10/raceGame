@@ -21,8 +21,8 @@ var mapStatus = PLAY;
 //players
 var maxvelocity;
     //player 1
-    var player1X = 227;
-    var player1Y = 460;
+    var player1X = 255;
+    var player1Y = 500;
     var velocity1X = 0;
     var velocity1Y = 0;
 
@@ -124,7 +124,7 @@ var mouseXY = function() {
 
     text(x + ', ' + y, xPos+20, yPos - 20);
     stroke('white');
-    strokeWeight(15);
+    strokeWeight(5);
     point(x, y);
     strokeWeight(0);
   }
@@ -382,12 +382,32 @@ var tekenAlles = function() {
         image(map1[i][t], 192*t, 192*i, 192, 192);
       }
     }
-    push();
-    translate(277, 460);
-    rotate(0);
-    image(imgRaceCarGreenWhite, 0, 0, 52, 88);
-    pop();
+    
 
+    if (racing === true) {
+      var offsetCar = 0;
+      if (!keyIsDown(68) && !keyIsDown(39) && !keyIsDown(65) && !keyIsDown(37)) {
+        offsetCar = 0;
+      }else{
+        if(keyIsDown(68) || keyIsDown(39)) {
+          offsetCar = 100;
+        }else if(keyIsDown(65) || keyIsDown37) {
+          offsetCar = -100;
+        }
+      }
+
+      push();
+      translate(player1X+offsetCar, player1Y);
+      if(offsetCar != 0) {
+        rotate(10);
+      }
+      image(imgRaceCarGreenWhite, offsetCar - 28, -36, 52, 88);
+      pop();
+
+    }else{
+      image(imgRaceCarGreenWhite, player1X-28, player1Y-36, 52, 88);
+    }
+  
     if (racing === false) {
       racingTimer();
     }
@@ -489,7 +509,6 @@ function setup() {
  * uitgevoerd door de p5 library, nadat de setup functie klaar is
  */
 function draw() {
-  startMenu();
   background(220);
   image(imgStartMenu1, 0, 0, 1536, 960);
   if (gameStatus === MENU) {
