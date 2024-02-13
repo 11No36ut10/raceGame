@@ -1,9 +1,9 @@
 {
-  "name": "De Beste Game Van De Klas",
-  "short_name": "Game",
+  "name": "2D Pixel Racing Game",
+  "short_name": "Racing",
   "icons": [{
     "src": "images/raceCars/raceCarGreenWhite.png",
-      "sizes": "512x512",
+      "sizes": "528x5282",
       "type": "image/png"
     }],
   "start_url": "index.html",

@@ -382,12 +382,14 @@ var tekenAlles = function() {
         image(map1[i][t], 192*t, 192*i, 192, 192);
       }
     }
-    image(imgRaceCarGreenWhite, player1X, player1Y, 52, 88);
+    push();
+    translate(277, 460);
+    rotate(0);
+    image(imgRaceCarGreenWhite, 0, 0, 52, 88);
+    pop();
 
     if (racing === false) {
       racingTimer();
-    }else{
-      
     }
     
   }
@@ -466,6 +468,8 @@ function setup() {
   map1[2] = [imgRaceTrackGrass, imgRaceTrackFinishUp, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackDown, imgRaceTrackGrass];
   map1[3] = [imgRaceTrackGrass, imgRaceTrackCorner4, imgRaceTrackLeft, imgRaceTrackLeft, imgRaceTrackLeft, imgRaceTrackCorner3, imgRaceTrackGrass];
   map1[4] = [imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass];
+
+  angleMode(DEGREES);
 
   loadFont('Minecraft.ttf', pixelFont => {
     fill('white');
