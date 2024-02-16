@@ -19,19 +19,17 @@ var gameStatus = MENU;
 var mapStatus = PLAY;
 
 //players
-var maxvelocity;
+var maxvelocity = 5;
+var velocityIncreas = 0.1;
     //player 1
     var player1X = 255;
     var player1Y = 500;
-    var velocity1X = 0;
-    var velocity1Y = 0;
-
+    var velocity1 = 0;
 
     //player 2
     var player2X = 0;
     var player2Y = 0;
-    var velocity2X = 0;
-    var velocity2Y = 0;
+    var velocity2 = 0;
 
 // timers
 var timer = 5;
@@ -218,6 +216,8 @@ var tutorial = function() {
   
   image(imgStartMenuButtonLine, 1000, 903);
   image(imgStartMenuButton, 1000, buttonheight);
+
+
   if (currentLine < 10) {
     text('Skip >', 1090, buttonheight + 45);
   }else{
@@ -351,6 +351,7 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // botsing speler tegen vijand
+  
 
   // botsing kogel tegen vijand
 
@@ -382,35 +383,24 @@ var tekenAlles = function() {
         image(map1[i][t], 192*t, 192*i, 192, 192);
       }
     }
-    
+
+    if (racing === false) {
+      racingTimer();
+    }
 
     if (racing === true) {
-      var offsetCar = 0;
-      if (!keyIsDown(68) && !keyIsDown(39) && !keyIsDown(65) && !keyIsDown(37)) {
-        offsetCar = 0;
-      }else{
-        if(keyIsDown(68) || keyIsDown(39)) {
-          offsetCar = 100;
-        }else if(keyIsDown(65) || keyIsDown37) {
-          offsetCar = -100;
-        }
-      }
-
       push();
-      translate(player1X+offsetCar, player1Y);
-      if(offsetCar != 0) {
-        rotate(10);
-      }
-      image(imgRaceCarGreenWhite, offsetCar - 28, -36, 52, 88);
+      //player1Y -= maxvelocity;
+      
+      rotate(30)
+      translate(player1X - 28, player1Y - 36);
+      image(imgRaceCarGreenWhite, 0, 0, 52, 88);
       pop();
-
     }else{
       image(imgRaceCarGreenWhite, player1X-28, player1Y-36, 52, 88);
     }
   
-    if (racing === false) {
-      racingTimer();
-    }
+    
     
   }
 };
@@ -424,7 +414,7 @@ var racingTimer = function() {
       x = 629;
     }
     if (timer === 2) {
-      x = 629
+      x = 629;
     }
     if (timer === 1) {
       x = 633;
