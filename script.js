@@ -25,11 +25,13 @@ var velocityIncreas = 0.1;
     var player1X = 255;
     var player1Y = 500;
     var velocity1 = 0;
+    var rotationP1 = 0;
 
     //player 2
     var player2X = 0;
     var player2Y = 0;
     var velocity2 = 0;
+    var rotationP2 = 0;
 
 // timers
 var timer = 5;
@@ -337,12 +339,22 @@ var tutorial = function() {
   
 
 var beweegAlles = function() {
-  // speler
+  if(racing === true) {
+    if(keyIsDown(87)){
+      if(velocity1 < maxvelocity) {
+        velocity1 += velocityIncreas*2;
+      }
+    }
+    if(velocity1 > 0) {
+      velocity1 -= velocityIncreas;
+    }
+    
+    
+    player1Y -= velocity1;
+  }
 
-  // vijand
-
-  // kogel
-};
+  
+}
 
 /**
  * Checkt botsingen
@@ -363,17 +375,8 @@ var verwerkBotsing = function() {
  * Tekent spelscherm
  */
 var tekenAlles = function() {
-  // achtergrond
+  //map1 Tutorial + player1
 
-  // vijand
-
-  // kogel
-
-  // speler
-
-  // punten en health
-
-  //map1 Tutorial
   if(mapStatus === TUTORIALMAP) {
     
 
@@ -390,12 +393,11 @@ var tekenAlles = function() {
 
     if (racing === true) {
       push();
-      //player1Y -= maxvelocity;
-      
-      rotate(30)
-      translate(player1X - 28, player1Y - 36);
-      image(imgRaceCarGreenWhite, 0, 0, 52, 88);
+      translate(player1X, player1Y);
+      rotate(rotationP1);
+      image(imgRaceCarGreenWhite, -28, -36, 52, 88);
       pop();
+      text(mouseX, mouseX, mouseY);
     }else{
       image(imgRaceCarGreenWhite, player1X-28, player1Y-36, 52, 88);
     }
@@ -403,7 +405,7 @@ var tekenAlles = function() {
     
     
   }
-};
+}
 
 var racingTimer = function() {
   if(timer > 0) {
@@ -471,7 +473,7 @@ function preload() {
  * de code in deze functie wordt één keer uitgevoerd door
  * de p5 library, zodra het spel geladen is in de browser
  */
-function setup() {
+function setup() { 
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   map1[0] = [imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass, imgRaceTrackGrass];
   map1[1] = [imgRaceTrackGrass, imgRaceTrackCorner1, imgRaceTrackRight, imgRaceTrackRight, imgRaceTrackRight, imgRaceTrackCorner2, imgRaceTrackGrass];
