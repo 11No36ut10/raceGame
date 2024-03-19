@@ -19,19 +19,21 @@ var gameStatus = MENU;
 var mapStatus = PLAY;
 
 //players
-var maxvelocity = 5;
+var maxvelocity = 10;
 var velocityIncreas = 0.1;
     //player 1
     var player1X = 255;
     var player1Y = 500;
     var velocity1 = 0;
     var rotationP1 = 0;
+    var directionP1 = 0;
 
     //player 2
     var player2X = 0;
     var player2Y = 0;
     var velocity2 = 0;
     var rotationP2 = 0;
+    var directionP2 = 0;
 
 // timers
 var timer = 5;
@@ -340,17 +342,79 @@ var tutorial = function() {
 
 var beweegAlles = function() {
   if(racing === true) {
-    if(keyIsDown(87)){
-      if(velocity1 < maxvelocity) {
-        velocity1 += velocityIncreas*2;
+    if(keyIsDown(87) || keyIsDown(38)){
+      if(directionP1 === -1){
+        if(velocity1 < maxvelocity) {
+          velocity1 += velocityIncreas*2;
+        }
+      }else if(directionP1 === 1) {
+        if(velocity1 > 0) {
+          velocity1 -= velocityIncreas;
+        }else{
+          directionP1 = -1;
+        }
+      }else{
+        directionP1 = -1;
       }
     }
+    if(keyIsDown(83) || keyIsDown(40)){
+      if(directionP1 === 1){
+        if(velocity1 < maxvelocity) {
+          velocity1 += velocityIncreas*2;
+        }
+      }else if(directionP1 === -1) {
+        if(velocity1 > 0) {
+          velocity1 -= velocityIncreas;
+        }else{
+          directionP1 = 1;
+        }
+      }else{
+        directionP1 = 1;
+      }
+    }
+
+    if(keyIsDown(68) || keyIsDown(39)) {
+      if(velocity1 > 0) {
+        if(directionP1 === -1) {
+          rotationP1 += 1;
+        }
+      }
+    }
+    if(keyIsDown(65) || keyIsDown(37)) {
+      if(velocity1 > 0) {
+        if(directionP1 === -1) {
+          rotationP1 -= 1;
+        }
+      }
+    }
+    if(keyIsDown(68) || keyIsDown(39)) {
+      if(velocity1 > 0) {
+        if(directionP1 === 1) {
+          rotationP1 -= 1;
+        }
+      }
+    }
+    if(keyIsDown(65) || keyIsDown(37)) {
+      if(velocity1 > 0) {
+        if(directionP1 === 1) {
+          rotationP1 += 1;
+        }
+      }
+    }
+   
     if(velocity1 > 0) {
       velocity1 -= velocityIncreas;
     }
-    
-    
-    player1Y -= velocity1;
+    if(velocity1 < 0) {
+      velocity1 = 0;
+    }
+    while(rotationP1 > 360) {
+      rotationP1 -= 360;
+    }
+
+
+    player1Y -= cos(rotationP1) * velocity1;
+    player1X += sin(rotationP1) * velocity1;
   }
 
   
@@ -392,7 +456,7 @@ var tekenAlles = function() {
     }
 
     if (racing === true) {
-      push();
+      push()
       translate(player1X, player1Y);
       rotate(rotationP1);
       image(imgRaceCarGreenWhite, -28, -36, 52, 88);
@@ -487,6 +551,7 @@ function setup() {
     fill('white');
     textFont(pixelFont);
     textSize(36);
+
   })
 
   createCanvas(1344, 960);
