@@ -17,7 +17,7 @@ const TUTORIAL = 4;
 const TUTORIALMAP = 5;
 var gameStatus = MENU;
 var mapStatus = PLAY;
-var testing = true;
+var testing = false;
 
 //players
 var maxvelocity = 10;
@@ -433,23 +433,59 @@ var verwerkBotsing = function() {
   // car with border
   push();
   translate(player1X, player1Y);
+  let topLeft = [
+    [-26, -44],
+    [-26-18*(rotationP1/90), -44+18*(rotationP1/90)],
+    []
+  ];
+  let topRight = [
+    [26, -44],
+    [26+18*(rotationP1/90), -44+18*(rotationP1/90)],
+    []
+  ];
+  let bottomLeft = [
+    [-26, 44],
+    [-26-18*(rotationP1/90), 44-18*(rotationP1/90)],
+    []
+  ];
+  let bottomRight = [
+    [26, 44],
+    [26+18*(rotationP1/90), 44-18*(rotationP1/90)],
+    []
+  ];
 
   stroke('magenta');
   strokeWeight(3);
 
   if(rotationP1 === 0) {
-    line(26, -44, 26, 44);
-    line(-26, -44, -26, 44);
+    line(topRight[0][0], topRight[0][1], bottomRight[0][0], bottomRight[0][1]);
+
+    line(topLeft[0][0], topLeft[0][1], bottomLeft[0][0], bottomLeft[0][1]);
+    if(player1Y+topLeft[0][1] < 0) {
+      player1Y = -topLeft[0][1];
+    }
   }else if(rotationP1 <= 90){
-    line(26+18*(rotationP1/90), -44+18*(rotationP1/90), 26+18*(rotationP1/90), 44-18*(rotationP1/90));
-    line(-26-18*(rotationP1/90), -44+18*(rotationP1/90), -26-18*(rotationP1/90), 44-18*(rotationP1/90));
+
+    line(topRight[1][0], topRight[1][1], bottomRight[1][0], bottomRight[1][1]); //right, top-bottom
+    line(topLeft[1][0], topLeft[1][1], bottomLeft[1][0], bottomLeft[1][1]); //left, top-bottom
+    if(player1Y+topLeft[1][1] < 0) {
+      player1Y = -topLeft[1][1];
+    }
+    // line(26+18*(rotationP1/90), -44+18*(rotationP1/90), 26+18*(rotationP1/90), 44-18*(rotationP1/90)); //right, top-bottom
+    // line(-26-18*(rotationP1/90), -44+18*(rotationP1/90), -26-18*(rotationP1/90), 44-18*(rotationP1/90)); //left, top-bottom
   }else if(rotationP1 <= 180 && rotationP1 > 90) {
+    // line (26+18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), 26+18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
+    // line (-26-18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), -26-18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
     line (26+18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), 26+18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
     line (-26-18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), -26-18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
   }else if(rotationP1 <= 270 && rotationP1 > 180) {
+    // line(26+18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), 26+18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
+    // line(-26-18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), -26-18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
     line(26+18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), 26+18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
     line(-26-18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), -26-18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
   }else{
+    // line(26+18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), 26+18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
+    // line(-26-18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), -26-18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
     line(26+18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), 26+18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
     line(-26-18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), -26-18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
   }
@@ -457,14 +493,18 @@ var verwerkBotsing = function() {
   // 180-rotationP1
   // 18*((180-rotationP1)/90)
 
-  
+  // for(var i = 0; i < topLeft.length; i++) {
+  //   if(topLeft[i][1] < 0) {
+  //     player1Y = -topLeft[i][1];
+  //   }
+  // }
 
-  if(player1Y-44 < 0) {
-    player1Y = 44;
-  }
-  if(player1Y-44 > 960) {
-    player1Y = 960-44;
-  }
+  // if(player1Y-44 < 0) {
+  //   player1Y = 44;
+  // }
+  // if(player1Y-44 > 960) {
+  //   player1Y = 960-44;
+  // }
       
   pop();
 
