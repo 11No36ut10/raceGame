@@ -17,6 +17,7 @@ const TUTORIAL = 4;
 const TUTORIALMAP = 5;
 var gameStatus = MENU;
 var mapStatus = PLAY;
+var testing = true;
 
 //players
 var maxvelocity = 10;
@@ -411,6 +412,9 @@ var beweegAlles = function() {
     while(rotationP1 > 360) {
       rotationP1 -= 360;
     }
+    while(rotationP1 < 0) {
+      rotationP1 += 360;
+    }
 
 
     player1Y -= cos(rotationP1) * velocity1;
@@ -426,12 +430,46 @@ var beweegAlles = function() {
  * Updatet globale variabelen punten en health
  */
 var verwerkBotsing = function() {
-  // botsing speler tegen vijand
+  // car with border
+  push();
+  translate(player1X, player1Y);
+
+  stroke('magenta');
+  strokeWeight(3);
+
+  if(rotationP1 === 0) {
+    line(26, -44, 26, 44);
+    line(-26, -44, -26, 44);
+  }else if(rotationP1 <= 90){
+    line(26+18*(rotationP1/90), -44+18*(rotationP1/90), 26+18*(rotationP1/90), 44-18*(rotationP1/90));
+    line(-26-18*(rotationP1/90), -44+18*(rotationP1/90), -26-18*(rotationP1/90), 44-18*(rotationP1/90));
+  }else if(rotationP1 <= 180 && rotationP1 > 90) {
+    line (26+18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), 26+18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
+    line (-26-18*((180-rotationP1)/90), -44+18*((180-rotationP1)/90), -26-18*((180-rotationP1)/90), 44-18*((180-rotationP1)/90));
+  }else if(rotationP1 <= 270 && rotationP1 > 180) {
+    line(26+18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), 26+18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
+    line(-26-18*((rotationP1-180)/90), -44+18*((rotationP1-180)/90), -26-18*((rotationP1-180)/90), 44-18*((rotationP1-180)/90));
+  }else{
+    line(26+18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), 26+18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
+    line(-26-18*((360-rotationP1)/90), -44+18*((360-rotationP1)/90), -26-18*((360-rotationP1)/90), 44-18*((360-rotationP1)/90));
+  }
+
+  // 180-rotationP1
+  // 18*((180-rotationP1)/90)
+
   
 
-  // botsing kogel tegen vijand
+  if(player1Y-44 < 0) {
+    player1Y = 44;
+  }
+  if(player1Y-44 > 960) {
+    player1Y = 960-44;
+  }
+      
+  pop();
 
-  // update punten en health
+  
+  
 
 };
 
@@ -456,17 +494,17 @@ var tekenAlles = function() {
     }
 
     if (racing === true) {
-      push()
+      push();
       translate(player1X, player1Y);
       rotate(rotationP1);
-      image(imgRaceCarGreenWhite, -28, -36, 52, 88);
+      image(imgRaceCarGreenWhite, -26, -44, 52, 88);
+      
+      
       pop();
       text(mouseX, mouseX, mouseY);
     }else{
-      image(imgRaceCarGreenWhite, player1X-28, player1Y-36, 52, 88);
+      image(imgRaceCarGreenWhite, player1X-26, player1Y-44, 52, 88);
     }
-  
-    
     
   }
 }
@@ -568,6 +606,11 @@ function setup() {
 function draw() {
   background(220);
   image(imgStartMenu1, 0, 0, 1536, 960);
+  if(testing === true) {
+    gameStatus = PLAY;
+    mapStatus = TUTORIALMAP;
+    racing = true;
+  }
   if (gameStatus === MENU) {
     startMenu();
   }
@@ -580,6 +623,7 @@ function draw() {
     beweegAlles();
     verwerkBotsing();
     tekenAlles();
+    verwerkBotsing();
   }
   if (gameStatus === GAMEOVER) {
     // teken game-over scherm
