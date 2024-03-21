@@ -20,7 +20,10 @@ var mapStatus = PLAY;
 var testing = true;
 
 //players
-var maxvelocity = 10;
+var startMax = 7;
+var maxvelocity = startMax;
+var grassSpeed = 5;
+var wallSpeed = 0;
 var velocityIncreas = 0.1;
     //player 1
     var player1X = 255;
@@ -377,28 +380,28 @@ var beweegAlles = function() {
     if(keyIsDown(68) || keyIsDown(39)) {
       if(velocity1 > 0) {
         if(directionP1 === -1) {
-          rotationP1 += 1;
+          rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
         }
       }
     }
     if(keyIsDown(65) || keyIsDown(37)) {
       if(velocity1 > 0) {
         if(directionP1 === -1) {
-          rotationP1 -= 1;
+          rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
         }
       }
     }
     if(keyIsDown(68) || keyIsDown(39)) {
       if(velocity1 > 0) {
         if(directionP1 === 1) {
-          rotationP1 -= 1;
+          rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
         }
       }
     }
     if(keyIsDown(65) || keyIsDown(37)) {
       if(velocity1 > 0) {
         if(directionP1 === 1) {
-          rotationP1 += 1;
+          rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
         }
       }
     }
@@ -473,94 +476,87 @@ var verwerkBotsing = function() {
     // line(topRight[0][0], topRight[0][1], bottomRight[0][0], bottomRight[0][1]);
     // line(topLeft[0][0], topLeft[0][1], bottomLeft[0][0], bottomLeft[0][1]);
     if(player1Y+topLeft[0][1] < 0) {
+      maxvelocity = wallSpeed;
       player1Y = -topLeft[0][1];
-    }
-    if(player1Y-bottomRight[0][1] > 960) {
+    }else if(player1Y-bottomRight[0][1] > 960) {
+      maxvelocity = wallSpeed;
       player1Y = bottomRight[0][1];
-    }
-    if(player1X+bottomLeft[0][0] < 0) {
+    }else if(player1X+bottomLeft[0][0] < 0) {
+      maxvelocity = wallSpeed;
       player1X = -bottomLeft[0][0]
-    }
-    if(player1X+topRight[0][0] > 1344) {
+    }else if(player1X+topRight[0][0] > 1344) {
+      maxvelocity = wallSpeed;
       player1X = 1344-topRight[0][0];
+    }else{
+      maxvelocity = startMax;
     }
   }else if(rotationP1 <= 90){
-    // line(topRight[1][0], topRight[1][1], bottomRight[1][0], bottomRight[1][1]); //right, top-bottom
-    // line(topLeft[1][0], topLeft[1][1], bottomLeft[1][0], bottomLeft[1][1]); //left, top-bottom
     if(player1Y+topLeft[1][1] < 0) {
+      maxvelocity = wallSpeed;
       player1Y = -topLeft[1][1];
-    }
-    if(player1Y+bottomRight[1][1] > 960) {
+    }else if(player1Y+bottomRight[1][1] > 960) {
+      maxvelocity = wallSpeed;
       player1Y = 960-bottomRight[1][1];
-    }
-    if(player1X+bottomLeft[1][0] < 0) {
-      player1X = -bottomLeft[1][0]
-    }
-    if(player1X+topRight[1][0] > 1344) {
+    }else if(player1X+bottomLeft[1][0] < 0) {
+      maxvelocity = wallSpeed;
+      player1X = -bottomLeft[1][0];
+    }else if(player1X+topRight[1][0] > 1344) {
+      maxvelocity = wallSpeed;
       player1X = 1344-topRight[1][0];
+    }else{
+      maxvelocity = startMax;
     }
   }else if(rotationP1 <= 180 && rotationP1 > 90) {
     // line (topRight[2][0], topRight[2][1], bottomRight[2][0], bottomRight[2][1]);
     // line (topLeft[2][0], topLeft[2][1], bottomLeft[2][0], bottomLeft[2][1]);
     if(player1Y+topLeft[2][1] < 0) {
+      maxvelocity = wallSpeed;
       player1Y = -topLeft[2][1];
-    }
-    if(player1Y+bottomRight[2][1] > 960) {
+    }else if(player1Y+bottomRight[2][1] > 960) {
+      maxvelocity = wallSpeed;
       player1Y = 960-bottomRight[2][1];
-    }
-    if(player1X+bottomLeft[2][0] < 0) {
-      player1X = -bottomLeft[2][0]
-    }
-    if(player1X+topRight[2][0] > 1344) {
+    }else if(player1X+bottomLeft[2][0] < 0) {
+      maxvelocity = wallSpeed;
+      player1X = -bottomLeft[2][0];
+    }else if(player1X+topRight[2][0] > 1344) {
+      maxvelocity = wallSpeed;
       player1X = 1344-topRight[2][0];
+    }else{
+      maxvelocity = startMax;
     }
   }else if(rotationP1 <= 270 && rotationP1 > 180) {
-    // line(topRight[3][0], topRight[3][1], bottomRight[3][0], bottomRight[3][1]);
-    // line(topLeft[3][0], topLeft[3][1], bottomLeft[3][0], bottomLeft[3][1]);
     if(player1Y+topLeft[3][1] < 0) {
+      maxvelocity = wallSpeed;
       player1Y = -topLeft[3][1];
-    }
-    if(player1Y+bottomRight[3][1] > 960) {
+    }else if(player1Y+bottomRight[3][1] > 960) {
+      maxvelocity = wallSpeed;
       player1Y = 960-bottomRight[3][1];
-    }
-    if(player1X+bottomLeft[3][0] < 0) {
-      player1X = -bottomLeft[3][0]
-    } 
-    if(player1X+topRight[3][0] > 1344) {
+    }else if(player1X+bottomLeft[3][0] < 0) {
+      maxvelocity = wallSpeed;
+      player1X = -bottomLeft[3][0];
+    }else if(player1X+topRight[3][0] > 1344) {
+      maxvelocity = wallSpeed;
       player1X = 1344-topRight[3][0];
+    }else{
+      maxvelocity = startMax;
     }
   }else{
-    // line(topRight[4][0], topRight[4][1], bottomRight[4][0], bottomRight[4][1]);
-    // line(topLeft[4][0], topLeft[4][1], bottomLeft[4][0], bottomLeft[4][1]);
     if(player1Y+topLeft[4][1] < 0) {
+      maxvelocity = wallSpeed;
       player1Y = -topLeft[4][1];
-    }
-    if(player1Y+bottomRight[4][1] > 960) {
+    }else if(player1Y+bottomRight[4][1] > 960) {
+      maxvelocity = wallSpeed;
       player1Y = 960-bottomRight[4][1];
-    }
-    if(player1X+bottomLeft[4][0] < 0) {
-      player1X = -bottomLeft[4][0]
-    }
-    if(player1X+topRight[4][0] > 1344) {
+    }else if(player1X+bottomLeft[4][0] < 0) {
+      maxvelocity = wallSpeed;
+      player1X = -bottomLeft[4][0];
+    }else if(player1X+topRight[4][0] > 1344) {
+      maxvelocity = wallSpeed;
       player1X = 1344-topRight[4][0];
+    }else{
+      maxvelocity = startMax;
     }
   }
-
-  // 180-rotationP1
-  // 18*((180-rotationP1)/90)
-
-  // for(var i = 0; i < topLeft.length; i++) {
-  //   if(topLeft[i][1] < 0) {
-  //     player1Y = -topLeft[i][1];
-  //   }
-  // }
-
-  // if(player1Y-44 < 0) {
-  //   player1Y = 44;
-  // }
-  // if(player1Y-44 > 960) {
-  //   player1Y = 960-44;
-  // }
       
   pop();
 
