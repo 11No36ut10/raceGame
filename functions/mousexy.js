@@ -1,3 +1,7 @@
+//
+// text for position x and y 
+// press X to see only works while testing is true
+//
 var mouseXY = function() {
     if(keyIsDown(88)) {
       let x = round(mouseX, 0);

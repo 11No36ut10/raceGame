@@ -1,4 +1,5 @@
 //starting menu with 
+// play, tutorial and shop button
 
 var startMenu = function() {
     let currentString = stringMenu.substring(0, currentCharacter);
