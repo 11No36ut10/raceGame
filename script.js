@@ -17,13 +17,13 @@ const TUTORIAL = 4;
 const TUTORIALMAP = 5;
 var gameStatus = MENU;
 var mapStatus = PLAY;
-var testing = true;
+var testing = false;
 
 //players
-var startMax = 7;
+var startMax = 8;
 var maxvelocity = startMax;
 var grassSpeed = 5;
-var wallSpeed = 0;
+var wallSpeed = 1;
 var velocityIncreas = 0.1;
     //player 1
     var player1X = 255;
@@ -99,249 +99,6 @@ var imgRaceCarGreenWhite;
 /* Game functions                                */
 /* ********************************************* */
 
-/*
- * Testing for x and y
- */
-
-var mouseXY = function() {
-  if(keyIsDown(88)) {
-    let x = round(mouseX, 0);
-    let y = round(mouseY, 0);
-    let xPos = round(mouseX, 0);
-    let yPos = round(mouseY, 0);
-    if(xPos > 1164) {
-      xPos = x - 200;
-    }else{
-      xPos = x;
-    }
-    if(yPos < 50) {
-      yPos = y + 60;
-    }
-
-    if(x > 1344) {
-      x = 1344;
-    }
-    if(x < 0) {
-      x = 0;
-    }
-    if(y > 960) {
-      y = 960;
-    }
-
-    text(x + ', ' + y, xPos+20, yPos - 20);
-    stroke('white');
-    strokeWeight(5);
-    point(x, y);
-    strokeWeight(0);
-  }
-}
-
-/*
- * Starting Menu Screen
- */
-var startMenu = function() {
-  let currentString = stringMenu.substring(0, currentCharacter);
-
-  // typing animation 'welcome . . .'
-  image(imgStartMenu1, 0, 0, 1344, 960);
-  text(currentString, 572, 380);
-  if (currentCharacter < 14) {
-    currentCharacter += 0.07;
-  }else{
-    placeButtons = true;
-    currentCharacter -= 7;
-  }
-  //
-
-  // play, and tutorial button
-  if (placeButtons === true) {
-    let heightPlayButton = 455;
-    let heightTutorialButton = 620;
-
-    if (mouseX > 472 && mouseX < 872) {
-      if (mouseY > 455 && mouseY < 555) {
-        heightPlayButton = 450;
-        if (mouseIsPressed) {
-          heightPlayButton = 455;
-        }else{
-          heightPlayButton = 450;
-        }
-      }else{
-        heightPlayButton = 455;
-      }
-      if (mouseY > 620 && mouseY < 720) {
-        heightTutorialButton = 615;
-        if (mouseIsPressed) {
-          heightTutorialButton = 620;
-          
-          gameStatus = TUTORIAL;
-        }else{
-          heightTutorialButton = 615;
-        }
-      }else{
-        heightTutorialButton = 620;
-      }
-    }
-
-    image(imgStartMenuButtonLine, 472, 540, 400, 15);
-    image(imgStartMenuButton, 472, heightPlayButton, 400, 100);
-    text('Play', 635, heightPlayButton+60);
-
-    image(imgStartMenuButtonLine, 472, 705, 400, 15);
-    image(imgStartMenuButton, 472, heightTutorialButton, 400, 100);
-    text('Tutorial', 605, heightTutorialButton+60);
-    //
-  }
-}
-
-/*
- * Tutorial screen
- */
-var tutorial = function() {
-  let buttonheight = 850;
-  if (mouseX > 1000 && mouseX < 1256 && mouseY > 850 && mouseY < 914) {
-    if (mouseIsPressed) {
-      buttonheight = 850;
-      if(currentLine < 10) {
-        typingSpeed = 7;
-      }else{
-        
-        if(wait < 4) {
-          wait++;
-        }else{
-          wait = 0;
-          gameStatus = PLAY;
-          mapStatus = TUTORIALMAP;
-        }
-        
-      }
-    }else{
-      buttonheight = 845;
-    }
-  }else{
-    buttonheight = 850;
-  }
-  
-  image(imgStartMenuButtonLine, 1000, 903);
-  image(imgStartMenuButton, 1000, buttonheight);
-
-
-  if (currentLine < 10) {
-    text('Skip >', 1090, buttonheight + 45);
-  }else{
-    text('Continue >', 1040, buttonheight + 45);
-  }
-
-  let currentString1 = stringTutorial[0].substring(0, currentCharacterTut[0]);
-
-  text(currentString1, 100, 100);
-  if (currentCharacterTut[0] < stringTutorial[0].length) {
-    currentCharacterTut[0] += typingSpeed;
-  }else{
-    currentLine = 2;
-  }
-  
-
-  if (currentLine >= 2) {
-    let currentString2 = stringTutorial[1].substring(0, currentCharacterTut[1]);
-
-    text(currentString2, 100, 150);
-    if (currentCharacterTut[1] < stringTutorial[1].length) {
-      currentCharacterTut[1] += typingSpeed;
-    }else{
-      currentLine = 3;
-    }
-  }
-
-  if (currentLine >= 3) {
-    let currentString3 = stringTutorial[2].substring(0, currentCharacterTut[2]);
-
-    text(currentString3, 100, 250);
-    if (currentCharacterTut[2] < stringTutorial[2].length) {
-      currentCharacterTut[2] += typingSpeed;
-    }else{
-      currentLine = 4;
-    }
-    if (currentCharacterTut[2] > 29) {
-      image(imgArrowUp, 587, 223, 32, 32);
-    }
-  }
-
-  if (currentLine >= 4) {
-    let currentString4 = stringTutorial[3].substring(0, currentCharacterTut[3]);
-
-    text(currentString4, 100, 300);
-    if (currentCharacterTut[3] < stringTutorial[3].length) {
-      currentCharacterTut[3] += typingSpeed;
-    }else{
-      currentLine = 5;
-    }
-    if (currentCharacterTut[3] > 40) {
-      image(imgArrowDown, 801, 273, 32, 32);
-    }
-  }
-
-  if (currentLine >= 5) {
-    let currentString5 = stringTutorial[4].substring(0, currentCharacterTut[4]);
-
-    text(currentString5, 100, 350);
-    if (currentCharacterTut[4] < stringTutorial[4].length) {
-      currentCharacterTut[4] += typingSpeed;
-    }else{
-      currentLine = 6;
-    }
-    if (currentCharacterTut[4] > 32) {
-      image(imgArrowLeft, 611, 323, 32, 32);
-    }
-  }
-
-  if (currentLine >= 6) {
-    let currentString6 = stringTutorial[5].substring(0, currentCharacterTut[5]);
-
-    text(currentString6, 100, 400);
-    if (currentCharacterTut[5] < stringTutorial[5].length) {
-      currentCharacterTut[5] += typingSpeed;
-    }else{
-      currentLine = 7;
-    }
-    if (currentCharacterTut[5] > 32) {
-      image(imgArrowRight, 597, 373, 32, 32);
-    }
-  }
-
-  if (currentLine >= 7) {
-    let currentString7 = stringTutorial[6].substring(0, currentCharacterTut[6]);
-
-    text(currentString7, 100, 500);
-    if (currentCharacterTut[6] < stringTutorial[6].length) {
-      currentCharacterTut[6] += typingSpeed;
-    }else{
-      currentLine = 8;
-    }
-  }
-
-  if (currentLine >= 8) {
-    let currentString8 = stringTutorial[7].substring(0, currentCharacterTut[7]);
-
-    text(currentString8, 100, 550);
-    if (currentCharacterTut[7] < stringTutorial[7].length) {
-      currentCharacterTut[7] += typingSpeed;
-    }else{
-      currentLine = 9;
-    }
-  }
-  
-  if (currentLine >= 9) {
-    let currentString9 = stringTutorial[8].substring(0, currentCharacterTut[8]);
-
-    text(currentString9, 100, 700);
-    if (currentCharacterTut[8] < stringTutorial[8].length) {
-      currentCharacterTut[8] += typingSpeed;
-    }else{
-      currentLine = 10;
-    }
-  }
-}
   
 
 var beweegAlles = function() {
@@ -477,31 +234,41 @@ var verwerkBotsing = function() {
     // line(topLeft[0][0], topLeft[0][1], bottomLeft[0][0], bottomLeft[0][1]);
     if(player1Y+topLeft[0][1] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = -topLeft[0][1];
     }else if(player1Y-bottomRight[0][1] > 960) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = bottomRight[0][1];
     }else if(player1X+bottomLeft[0][0] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = -bottomLeft[0][0]
     }else if(player1X+topRight[0][0] > 1344) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = 1344-topRight[0][0];
     }else{
       maxvelocity = startMax;
     }
+
+    
   }else if(rotationP1 <= 90){
     if(player1Y+topLeft[1][1] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = -topLeft[1][1];
     }else if(player1Y+bottomRight[1][1] > 960) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = 960-bottomRight[1][1];
     }else if(player1X+bottomLeft[1][0] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = -bottomLeft[1][0];
     }else if(player1X+topRight[1][0] > 1344) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = 1344-topRight[1][0];
     }else{
       maxvelocity = startMax;
@@ -511,15 +278,19 @@ var verwerkBotsing = function() {
     // line (topLeft[2][0], topLeft[2][1], bottomLeft[2][0], bottomLeft[2][1]);
     if(player1Y+topLeft[2][1] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = -topLeft[2][1];
     }else if(player1Y+bottomRight[2][1] > 960) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = 960-bottomRight[2][1];
     }else if(player1X+bottomLeft[2][0] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = -bottomLeft[2][0];
     }else if(player1X+topRight[2][0] > 1344) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = 1344-topRight[2][0];
     }else{
       maxvelocity = startMax;
@@ -527,15 +298,19 @@ var verwerkBotsing = function() {
   }else if(rotationP1 <= 270 && rotationP1 > 180) {
     if(player1Y+topLeft[3][1] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = -topLeft[3][1];
     }else if(player1Y+bottomRight[3][1] > 960) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = 960-bottomRight[3][1];
     }else if(player1X+bottomLeft[3][0] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = -bottomLeft[3][0];
     }else if(player1X+topRight[3][0] > 1344) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = 1344-topRight[3][0];
     }else{
       maxvelocity = startMax;
@@ -543,21 +318,24 @@ var verwerkBotsing = function() {
   }else{
     if(player1Y+topLeft[4][1] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = -topLeft[4][1];
     }else if(player1Y+bottomRight[4][1] > 960) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1Y = 960-bottomRight[4][1];
     }else if(player1X+bottomLeft[4][0] < 0) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = -bottomLeft[4][0];
     }else if(player1X+topRight[4][0] > 1344) {
       maxvelocity = wallSpeed;
+      velocity1 = maxvelocity;
       player1X = 1344-topRight[4][0];
     }else{
       maxvelocity = startMax;
     }
   }
-      
   pop();
 
   
