@@ -304,7 +304,7 @@ var racingTimer = function() {
     text(timer, x, 140);
     if( frameCount % 60 == 0) {
       timer--;
-    }
+    } 
   }else{
     textSize(36)
     timer = 5;

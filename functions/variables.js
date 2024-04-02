@@ -13,7 +13,7 @@ var mapStatus = PLAY;
 var testing = false;
 
 //players
-var startMax = 8;
+var startMax = 10;
 var maxvelocity = startMax;
 var grassSpeed = 5;
 var wallSpeed = 1;
