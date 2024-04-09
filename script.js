@@ -11,69 +11,72 @@
 /* Game functions                                */
 /* ********************************************* */
 
-  
-
+/*
+/* berekenen van bewegingen
+*/
 var beweegAlles = function() {
-  if(racing === true) {
-    if(keyIsDown(87) || keyIsDown(38)){
-      if(directionP1 === -1){
-        if(velocity1 < maxvelocity) {
-          velocity1 += velocityIncreas*2;
-        }
-      }else if(directionP1 === 1) {
-        if(velocity1 > 0) {
-          velocity1 -= velocityIncreas;
-        }else{
-          directionP1 = -1;
-        }
-      }else{
-        directionP1 = -1;
+  if(racing === true) {                            //check of de spelers aan het racen zijn
+    if(keyIsDown(Wkey) || keyIsDown(UpArrow)){             
+      // if(directionP1 === -1){
+      if(velocity1 < maxvelocity) {
+        velocity1 += velocityIncreas*2;
+      }
+      // }else if(directionP1 === 1) {
+        // if(velocity1 > 0) {
+        //   velocity1 -= velocityIncreas;
+        // }else{
+        //   directionP1 = -1;
+        // }
+      // }else{
+      //   directionP1 = -1;
+      // }
+    }
+    if(keyIsDown(Skey) || keyIsDown(DownArrow)){
+      // if(directionP1 === 1){
+      //   if(velocity1 < maxvelocity) {
+      //     velocity1 += velocityIncreas*2;
+      // //   }
+      // }else if(directionP1 === -1) {
+      if(velocity1 > 0) {
+        velocity1 -= velocityIncreas;
+      }
+        // }else{
+        //   directionP1 = 1;
+        // }
+      // }else{
+      //   directionP1 = 1;
+      // }
+    }
+
+    if(keyIsDown(Dkey) || keyIsDown(RightArrow)) {
+      if(velocity1 > 0) {
+        // if(directionP1 === -1) {
+        rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
+        // }
       }
     }
-    if(keyIsDown(83) || keyIsDown(40)){
-      if(directionP1 === 1){
-        if(velocity1 < maxvelocity) {
-          velocity1 += velocityIncreas*2;
-        }
-      }else if(directionP1 === -1) {
-        if(velocity1 > 0) {
-          velocity1 -= velocityIncreas;
-        }else{
-          directionP1 = 1;
-        }
-      }else{
-        directionP1 = 1;
+    if(keyIsDown(Akey) || keyIsDown(LeftArrow)) {
+      if(velocity1 > 0) {
+        // if(directionP1 === -1) {
+        rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
+        // }
       }
     }
 
-    if(keyIsDown(68) || keyIsDown(39)) {
-      if(velocity1 > 0) {
-        if(directionP1 === -1) {
-          rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
-        }
-      }
-    }
-    if(keyIsDown(65) || keyIsDown(37)) {
-      if(velocity1 > 0) {
-        if(directionP1 === -1) {
-          rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
-        }
-      }
-    }
-    if(keyIsDown(68) || keyIsDown(39)) {
-      if(velocity1 > 0) {
-        if(directionP1 === 1) {
-          rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
-        }
-      }
-    }
-    if(keyIsDown(65) || keyIsDown(37)) {
-      if(velocity1 > 0) {
-        if(directionP1 === 1) {
-          rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
-        }
-      }
-    }
+    // if(keyIsDown(Dkey) || keyIsDown(RightArrow)) {
+    //   if(velocity1 > 0) {
+    //     // if(directionP1 === 1) {
+    //     rotationP1 -= 1.75-0.75*(velocity1/maxvelocity);
+    //     // }
+    //   }
+    // }
+    // if(keyIsDown(Akey) || keyIsDown(LeftArrow)) {
+    //   if(velocity1 > 0) {
+    //     // if(directionP1 === 1) {
+    //     rotationP1 += 1.75-0.75*(velocity1/maxvelocity);
+    //     // }
+    //   }
+    // }
    
     if(velocity1 > 0) {
       velocity1 -= velocityIncreas;
@@ -107,6 +110,22 @@ var beweegAlles = function() {
  */
 var verwerkBotsing = function() {
   // car with border
+  stroke('red');
+  strokeWeight(2);
+  // 19.2
+  line(192, 168, 1152, 168);
+  line(168, 263, 168, 768); //
+  line(192, 794, 1152, 794);
+  line(1179, 768, 1179, 192);
+
+  line(168, 263, 192, 263);
+  line(192, 263, 192, 243.8);
+  line(192, 243.8, 211.2, 243.8);
+  line(217, 238, 217, 213);
+  line(217, 213, 242, 213);
+  line(242, 213, 242, 188);
+  line(242, 188, 267, 188);
+
   push();
   translate(player1X, player1Y);
   let topLeft = [
@@ -247,10 +266,6 @@ var verwerkBotsing = function() {
     }
   }
   pop();
-
-  
-  
-
 };
 
 /**
@@ -287,30 +302,7 @@ var tekenAlles = function() {
   }
 }
 
-var racingTimer = function() {
-  if(timer > 0) {
-    image(imgCountdownSquare, 642-48, 70, 96, 96);
-    textSize(60);
-    var x = 625;
-    if (timer === 3) {
-      x = 629;
-    }
-    if (timer === 2) {
-      x = 629;
-    }
-    if (timer === 1) {
-      x = 633;
-    }
-    text(timer, x, 140);
-    if( frameCount % 60 == 0) {
-      timer--;
-    } 
-  }else{
-    textSize(36)
-    timer = 5;
-    racing = true;
-  }
-}
+
 
 /* ********************************************* */
 /* setup() en draw() functies / hoofdprogramma   */

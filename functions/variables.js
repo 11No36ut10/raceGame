@@ -8,9 +8,21 @@ const GAMEOVER = 2;
 const MENU = 3;
 const TUTORIAL = 4;
 const TUTORIALMAP = 5;
+
+// game keys
+const Wkey = 87;
+const Akey = 65;
+const Skey = 83;
+const Dkey = 68;
+
+const UpArrow = 38;
+const DownArrow = 40;
+const LeftArrow = 37;
+const RightArrow = 39;
+
 var gameStatus = MENU;
 var mapStatus = PLAY;
-var testing = false;
+var testing = true;
 
 //players
 var startMax = 10;
@@ -19,6 +31,7 @@ var grassSpeed = 5;
 var wallSpeed = 1;
 var velocityIncreas = 0.1;
     //player 1
+    var player1Car;
     var player1X = 255;
     var player1Y = 500;
     var velocity1 = 0;
@@ -26,6 +39,7 @@ var velocityIncreas = 0.1;
     var directionP1 = 0;
 
     //player 2
+    var player2Car = 0;
     var player2X = 0;
     var player2Y = 0;
     var velocity2 = 0;
@@ -55,7 +69,7 @@ let stringTutorial = [
   'When playing singleplayer, the goal is to beat your highscore!', 
   'If you are playing 1v1 you must beat your opponent!',
   'To go forward press [W] or [  ]',
-  'To go backwards or brake press [S] or [  ]',
+  'To brake press [S] or [  ]',
   'Stear left by pressing [A] or [   ],',
   'and to go right, press [D] or [   ]',
   'If you are playing 1v1, one player uses [WASD]',

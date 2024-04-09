@@ -80,8 +80,8 @@ var tutorial = function() {
       }else{
         currentLine = 5;
       }
-      if (currentCharacterTut[3] > 40) {
-        image(imgArrowDown, 801, 273, 32, 32);
+      if (currentCharacterTut[3] > 25) {
+        image(imgArrowDown, 492, 273, 32, 32);
       }
     }
   
